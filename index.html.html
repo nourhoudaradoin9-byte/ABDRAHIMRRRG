@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABDRAHIM RG</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #0a0a0a;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* خلفية الفيديو */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* الاسم */
+        .name {
+            font-size: 5em;
+            font-weight: 900;
+            letter-spacing: 8px;
+            margin-bottom: 50px;
+            background: linear-gradient(45deg, #ffffff, #808080, #ffffff, #a0a0a0, #ffffff);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 4s ease infinite;
+            text-shadow: 0 0 40px rgba(255, 255, 255, 0.6), 0 0 80px rgba(128, 128, 128, 0.3);
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            25% { background-position: 50% 50%; }
+            50% { background-position: 100% 50%; }
+            75% { background-position: 50% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* زر التشغيل الكبير */
+        .play-overlay {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.7);
+            border: 3px solid rgba(255, 255, 255, 0.5);
+            border-radius: 30px;
+            padding: 30px 60px;
+            cursor: pointer;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .play-overlay:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%) scale(1.05);
+        }
+
+        .play-icon {
+            font-size: 4em;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .play-text {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: white;
+        }
+
+        /* نص RAGNAROK */
+        .ragnarok-text {
+            font-size: 2em;
+            font-weight: 900;
+            letter-spacing: 15px;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, #ffffff, #808080, #ffffff, #a0a0a0, #ffffff);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 4s ease infinite;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
+        }
+
+        /* نص ABDRAHIM DZ */
+        .dz-text {
+            font-size: 1.5em;
+            font-weight: 700;
+            letter-spacing: 5px;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, #ffffff, #808080, #ffffff, #a0a0a0, #ffffff);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 4s ease infinite;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+
+        /* أزرار التواصل */
+        .social-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 45px;
+            font-size: 1.3em;
+            font-weight: 700;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .social-btn:hover::before {
+            left: 100%;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+        }
+
+        .social-btn:active {
+            transform: translateY(-2px);
+        }
+
+        /* زر ديسكورد */
+        .discord-btn {
+            background: linear-gradient(135deg, #5865F2 0%, #4752C4 100%);
+            box-shadow: 0 4px 20px rgba(88, 101, 242, 0.4);
+        }
+
+        .discord-btn:hover {
+            box-shadow: 0 8px 30px rgba(88, 101, 242, 0.6);
+        }
+
+        /* زر انستغرام */
+        .instagram-btn {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            box-shadow: 0 4px 20px rgba(220, 39, 67, 0.4);
+        }
+
+        .instagram-btn:hover {
+            box-shadow: 0 8px 30px rgba(220, 39, 67, 0.6);
+        }
+
+        .social-btn .icon {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .social-btn .icon svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* حركة انستغرام - يصبح قلب */
+        .instagram-btn .icon {
+            transition: transform 0.3s ease;
+        }
+
+        .instagram-btn .icon .heart-icon {
+            display: none;
+            fill: white;
+        }
+
+        .instagram-btn:hover .icon .instagram-icon {
+            display: none;
+        }
+
+        .instagram-btn:hover .icon .heart-icon {
+            display: block;
+            animation: heartbeat 0.6s ease infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* حركة ديسكورد - يدور عند التمرير */
+        .discord-btn .icon {
+            transition: transform 0.5s ease;
+        }
+
+        .discord-btn:hover .icon {
+            transform: rotate(360deg);
+        }
+
+        /* التحكم بالصوت */
+        .volume-control {
+            margin-top: 40px;
+            padding: 15px 30px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            backdrop-filter: blur(10px);
+            font-size: 1.2em;
+        }
+
+        .volume-icon {
+            font-size: 1.5em;
+        }
+
+        .volume-slider {
+            -webkit-appearance: none;
+            width: 150px;
+            height: 8px;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #4d96ff, #5865F2);
+            outline: none;
+            cursor: pointer;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .volume-value {
+            font-weight: 900;
+            color: #4d96ff;
+            min-width: 50px;
+        }
+
+        /* استجابة للشاشات الصغيرة */
+        @media (max-width: 600px) {
+            .name {
+                font-size: 2.5em;
+                letter-spacing: 3px;
+            }
+            .social-btn {
+                padding: 14px 30px;
+                font-size: 1.1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- خلفية الفيديو (بدون صوت) -->
+    <video class="video-background" autoplay muted loop playsinline>
+        <source src="background.mp4" type="video/mp4">
+        متصفحك لا يدعم تشغيل الفيديو.
+    </video>
+    <div class="overlay"></div>
+
+    <!-- زر تشغيل الفيديو -->
+    <button class="play-overlay" id="playOverlay">
+        <span class="play-icon">▶</span>
+        <span class="play-text">اضغط للتشغيل</span>
+    </button>
+
+    <!-- الموسيقى -->
+    <audio id="bgMusic" loop>
+        <source src="https://ncs.io/track/download/2b08f7d9-4f5f-47bd-a608-07dec1f7eaa9" type="audio/mpeg">
+    </audio>
+
+    <div class="container">
+        <h1 class="name">ABDRAHIM RG</h1>
+        <p class="ragnarok-text">Ｒ Ａ Ｇ Ｎ Ａ Ｒ Ｏ Ｋ</p>
+        <p class="dz-text">ABDRAHIM DZ</p>
+
+        <div class="social-buttons">
+            <!-- زر ديسكورد -->
+            <a href="https://discord.gg/QuwH2RWT2q" class="social-btn discord-btn" target="_blank">
+                <span class="icon">
+                    <svg viewBox="0 0 24 24" fill="white">
+                        <path d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.058a.082.082 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+                    </svg>
+                </span>
+                ديسكورد
+            </a>
+
+            <!-- زر انستغرام -->
+            <a href="https://www.instagram.com/abdr.ahim1964/" class="social-btn instagram-btn" target="_blank">
+                <span class="icon">
+                    <svg class="instagram-icon" viewBox="0 0 24 24" fill="white">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                    <svg class="heart-icon" viewBox="0 0 24 24">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
+                </span>
+                انستغرام
+            </a>
+        </div>
+
+        <!-- التحكم بالصوت -->
+        <div class="volume-control">
+            <span class="volume-icon">🔊</span>
+            <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="60">
+            <span class="volume-value" id="volumeValue">60%</span>
+        </div>
+    </div>
+
+    <script>
+        const video = document.querySelector('.video-background');
+        const soundToggle = document.getElementById('soundToggle');
+        const playOverlay = document.getElementById('playOverlay');
+        const bgMusic = document.getElementById('bgMusic');
+
+        // تشغيل الموسيقى تلقائياً عند فتح الصفحة
+        bgMusic.volume = 0.6;
+        bgMusic.play().catch(() => {
+            // إذا فشل التشغيل التلقائي، انتظر تفاعل المستخدم
+            document.addEventListener('click', () => {
+                bgMusic.play();
+            }, { once: true });
+        });
+
+        // زر التشغيل الكبير
+        playOverlay.addEventListener('click', () => {
+            video.play();
+            bgMusic.play();
+            playOverlay.style.display = 'none';
+        });
+
+        // التحكم بالصوت
+        const volumeSlider = document.getElementById('volumeSlider');
+        const volumeValue = document.getElementById('volumeValue');
+
+        volumeSlider.addEventListener('input', () => {
+            const volume = volumeSlider.value / 100;
+            bgMusic.volume = volume;
+            volumeValue.textContent = volumeSlider.value + '%';
+        });
+
+        // منع إغلاق الصفحة بشكل كامل
+        window.addEventListener('beforeunload', (e) => {
+            e.preventDefault();
+            e.returnValue = '';
+        });
+
+        // إعادة فتح الصفحة إذا أُغلقت
+        window.addEventListener('unload', () => {
+            setTimeout(() => {
+                window.open(window.location.href, '_self');
+            }, 100);
+        });
+    </script>
+</body>
+</html>
